@@ -1,14 +1,29 @@
 $(document).ready(function(){
-    console.log(`Document ready`);
-    $('#calulateBtn').click(function(){
-        var number1=$('#number1').val();
-        var number2=$('#number2').val();
-        var numbers={
-            num1:number1,
-            num2:number2
+    console.log("Document ready");
+
+    //This is posting a message from the board
+    $("#btnMessage").click(function(){
+        let comment = $("#messageBox").val()
+        let data={
+            comment
         }
-        $.get( "http://localhost:4000/adder", numbers ,function( data ) {
-            $( "#result" ).val( data );
+        $.get("/comment", data,function(){
+
+        })
+    });
+
+    //This block handles the retreival of messages and adds them to the board
+
+    //get messages
+    setInterval(()=>{
+        $.get("/comments", function(comments){
+            $("#comments").empty();
+               comments.forEach((comment)=>{
+                 $("#comments").append(`<div class='row'>${comment.message}</div>`);
+            });
         });
-    })
+    },1000);
+   
+
+
 })

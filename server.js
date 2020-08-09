@@ -21,6 +21,11 @@ app.get("/comment",function(req,res){
     res.send("added")
 })
 
+app.get("/comments", function(req,res){
+    retrieveComment(res);
+   })
+
+
 //DataBase Management - I was lazy and set it up for the assignment so it can just be recycled then.
 
 const uri = "mongodb+srv://sit725:sit725@sit725-assignment1-task.la1a9.mongodb.net/insta?retryWrites=true&w=majority";
@@ -37,8 +42,12 @@ const insertComment=(abc)=>{
    collectionMessages.insertOne({message:abc});
 };
 
-// setTimeout(function(){
-//     insertComment('Test 2');
-// },1000)
+const retrieveComment=(res)=>{
+    collectionMessages.find().toArray(function(err,result){
+        if (err) throw err;
+        res.send(result)
+    });
+}
+
 
 
